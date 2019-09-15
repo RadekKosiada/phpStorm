@@ -1,19 +1,22 @@
 const mainContainer = $("#main-container");
 console.log(mainContainer);
 
+
 const allMixedButton = mainContainer.append("<button>All mixed</button>");
 const seperatedButton = mainContainer.append("<button>Seperated</button>");
 
 let allMixed = true;
 let seperated = false;
 
-allMixedButton.click(function () {
+allMixedButton.click(function (e) {
+        e.preventDefault();
         allMixed = true;
         seperated = false;
         console.log(allMixed, seperated);
 });
 
- seperatedButton.click(function () {
+ seperatedButton.click(function (e) {
+     e.preventDefault();
      seperated = true;
      allMixed = false;
      console.log(allMixed, seperated);
@@ -33,11 +36,11 @@ $.ajax({
         addClassName(events, "events");
 
         if(seperated && !allMixed)  {
-            console.log("seperated")
+            console.log("seperated");
             fillData(current, "current");
             fillData(events, "events");
         } else {
-            console.log("allMixed")
+            console.log("allMixed");
             fillAllData (current, events);
         }
     }
@@ -63,17 +66,17 @@ function fillData(element) {
     element.forEach(function (item, index) {
         let currentContainer = mainContainer.append(`
                 <div id="${index}" class="${item.className}-container">
-                    <img src=${item.img}>
+                    <img alt="placeholder image" src=${item.img}>
                     <p>${item.date}</p>
                     <h1 class="">${item.headline}</h1>
                     <p>${item.infos}</p>
                     <p>${item.moreInfos}</p>
                 </div>`)
-    })
+    });
 }
 
 function addClassName(itemsArr, className) {
     itemsArr.forEach(function (item) {
         item.className = className;
     })
-};
+}
