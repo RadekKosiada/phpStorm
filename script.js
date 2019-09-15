@@ -10,20 +10,20 @@ $.ajax({
         const current = result.aktuelles; //array
         const events = result.veranstaltungen; //array
 
-        fillData(current);
+        fillData(current, "current");
 
-       fillData(events);
+       fillData(events, "events");
     }
 });
 
 
-function fillData (element) {
+function fillData (element, className) {
     element.forEach(function (item, index) {
         let currentContainer = mainContainer.append(`
-                <div class="current-container">
+                <div class="${className}-container">
                     <img src=${item.img}>
                     <p>${item.date}</p>
-                    <h1 class="current">${item.headline}</h1>
+                    <h1 class="">${item.headline}</h1>
                     <p>${item.infos}</p>
                     <p>${item.moreInfos}</p>
                 </div>`)
