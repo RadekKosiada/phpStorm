@@ -1,2 +1,9 @@
-console.log('blue');
-console.log('yellow');
+
+$.ajax({
+    type: 'GET',
+    url: "data.json",
+    contentType: 'application/json',
+    success: function(result) {
+        console.log(result)
+    }
+});
