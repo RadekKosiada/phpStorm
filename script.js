@@ -1,6 +1,25 @@
 const mainContainer = $("#main-container");
 console.log(mainContainer);
 
+const allMixedButton = mainContainer.append("<button>All mixed</button>");
+const seperatedButton = mainContainer.append("<button>Seperated</button>");
+
+let allMixed = true;
+let seperated = false;
+
+allMixedButton.click(function () {
+        allMixed = true;
+        seperated = false;
+        console.log(allMixed, seperated);
+});
+
+ seperatedButton.click(function () {
+     seperated = true;
+     allMixed = false;
+     console.log(allMixed, seperated);
+ });
+
+
 $.ajax({
     type: 'GET',
     url: "data.json",
@@ -13,10 +32,14 @@ $.ajax({
         addClassName(current, "current" );
         addClassName(events, "events");
 
-        //fillData(current, "current");
-        //fillData(events, "events");
-
-        fillAllData (current, events);
+        if(seperated && !allMixed)  {
+            console.log("seperated")
+            fillData(current, "current");
+            fillData(events, "events");
+        } else {
+            console.log("allMixed")
+            fillAllData (current, events);
+        }
     }
 });
 
@@ -33,7 +56,6 @@ function fillAllData (current, events) {
         })
     });
 
-    console.log(allElements);
     fillData(allElements)
 }
 
