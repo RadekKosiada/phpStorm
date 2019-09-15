@@ -6,26 +6,41 @@ $.ajax({
     url: "data.json",
     contentType: 'application/json',
     success: function (result) {
-        console.log(result.aktuelles)
         const current = result.aktuelles; //array
         const events = result.veranstaltungen; //array
 
-        fillData(current, "current");
-       fillData(events, "events");
+        //add className as additional property in each event or current
+        addClassName(current, "current" );
+        addClassName(events, "events");
 
-       const allEvents = $("#main-container").children();
-       console.log(allEvents);
-       Array.from(allEvents).forEach(function (elem) {
-           console.log(elem)
-       })
+        //fillData(current, "current");
+        //fillData(events, "events");
+
+        fillAllData (current, events);
     }
 });
 
+function fillAllData (current, events) {
+    console.log(current, events);
+    let allElements = [];
+    current.forEach(function (elem, indexElem) {
+        events.forEach(function (event, indexEvent) {
+            //this approach works only as long the length of current & events is equal!
+            if(indexEvent === indexElem) {
+                allElements.push(elem);
+                allElements.push(event);
+            }
+        })
+    });
 
-function fillData (element, className) {
+    console.log(allElements);
+    fillData(allElements)
+}
+
+function fillData(element) {
     element.forEach(function (item, index) {
         let currentContainer = mainContainer.append(`
-                <div id="${index}" class="${className}-container">
+                <div id="${index}" class="${item.className}-container">
                     <img src=${item.img}>
                     <p>${item.date}</p>
                     <h1 class="">${item.headline}</h1>
@@ -34,3 +49,9 @@ function fillData (element, className) {
                 </div>`)
     })
 }
+
+function addClassName(itemsArr, className) {
+    itemsArr.forEach(function (item) {
+        item.className = className;
+    })
+};
